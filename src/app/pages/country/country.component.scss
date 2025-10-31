@@ -1,3 +1,18 @@
+@import '../../../variables';
+
+.split {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: $spacing-large;
+  margin: $spacing-small;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  margin: $spacing-small;
+}
 
 .wrapper-container {
     display: flex;
@@ -8,11 +23,11 @@
     width: 50%;
     h2{
         text-align: center;
-        color: gray;
+        color: $text-color-light;
     }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: $breakpoint-mobile) {
     .container {
         width: 100%;
     }

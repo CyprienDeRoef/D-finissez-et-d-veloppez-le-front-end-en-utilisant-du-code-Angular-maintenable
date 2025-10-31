@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { CHART_COLORS } from '../../core/constants/chart-colors';
 
 @Component({
   selector: 'app-line-chart',
@@ -34,7 +35,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
           {
             label: 'medals',
             data: this.medalsData,
-            backgroundColor: '#0b868f',
+            backgroundColor: CHART_COLORS.primary,
           },
         ],
       },

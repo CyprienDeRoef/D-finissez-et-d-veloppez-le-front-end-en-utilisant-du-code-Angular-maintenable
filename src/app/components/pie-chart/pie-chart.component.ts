@@ -7,6 +7,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { CHART_PALETTE } from '../../core/constants/chart-colors';
 
 @Component({
   selector: 'app-pie-chart',
@@ -42,14 +43,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
           {
             label: 'Medals',
             data: this.medalsData,
-            backgroundColor: [
-              '#0b868f',
-              '#adc3de',
-              '#7a3c53',
-              '#8f6263',
-              'orange',
-              '#94819d',
-            ],
+            backgroundColor: CHART_PALETTE,
             hoverOffset: 4,
           },
         ],
