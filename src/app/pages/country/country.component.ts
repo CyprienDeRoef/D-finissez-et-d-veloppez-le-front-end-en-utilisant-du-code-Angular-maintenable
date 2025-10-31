@@ -58,11 +58,6 @@ export class CountryComponent implements OnInit {
     );
   }
 
-  private resetErrorState(): void {
-    this.countryNotFound = false;
-    this.error = '';
-  }
-
   private validateCountryData(
     country: Olympic | undefined,
     countryName: string
@@ -80,11 +75,6 @@ export class CountryComponent implements OnInit {
     return true;
   }
 
-  private setError(message: string): void {
-    this.countryNotFound = true;
-    this.error = message;
-  }
-
   private displayCountryInformation(country: Olympic): void {
     this.titlePage = country.country;
     this.statistics = this.dataService.getCountryStatistics(country);
@@ -94,13 +84,23 @@ export class CountryComponent implements OnInit {
       .map((count) => count.toString());
   }
 
+  goBack(): void {
+    this.router.navigate(['']);
+  }
+
+  private setError(message: string): void {
+    this.countryNotFound = true;
+    this.error = message;
+  }
+
+  private resetErrorState(): void {
+    this.countryNotFound = false;
+    this.error = '';
+  }
+
   private handleError(error: HttpErrorResponse): void {
     this.error =
       'An error occurred while loading country data. Please try again later.';
     console.error('Error loading country data:', error);
-  }
-
-  goBack(): void {
-    this.router.navigate(['']);
   }
 }

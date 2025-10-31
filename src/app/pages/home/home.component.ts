@@ -11,7 +11,7 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public error!: string;
+  public error: string = '';
   public titlePage: string = 'Medals per Country';
   public statistics: Statistic[] = [];
   public countries: string[] = [];
@@ -20,34 +20,70 @@ export class HomeComponent implements OnInit {
 
   constructor(private router: Router, private dataService: DataService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.loadOlympicData();
+  }
+
+  private loadOlympicData(): void {
+    this.resetErrorState();
     this.isLoading = true;
 
     this.dataService.getOlympics().subscribe(
       (data: Olympic[]) => {
         this.isLoading = false;
 
-        if (data && data.length > 0) {
-          const totalJOs = this.dataService.getTotalJOs(data);
-          this.countries = this.dataService.getCountries(data);
-          const totalCountries = this.countries.length;
-          this.medalsData = this.dataService.getTotalMedalsPerCountry(data);
-
-          // Créer le tableau de statistiques
-          this.statistics = [
-            { label: 'Number of countries', value: totalCountries },
-            { label: 'Number of JOs', value: totalJOs },
-          ];
+        if (!this.validateOlympicData(data)) {
+          return;
         }
+
+        this.displayOlympicInformation(data);
       },
       (error: HttpErrorResponse) => {
         this.isLoading = false;
-        this.error = error.message;
+        this.handleError(error);
       }
     );
   }
 
+  private validateOlympicData(data: Olympic[]): boolean {
+    if (!data || data.length === 0) {
+      this.setError('No Olympic data available. Please check back later.');
+      return false;
+    }
+
+    return true;
+  }
+
+  private displayOlympicInformation(data: Olympic[]): void {
+    const totalJOs = this.dataService.getTotalJOs(data);
+    this.countries = this.dataService.getCountries(data);
+    const totalCountries = this.countries.length;
+    this.medalsData = this.dataService.getTotalMedalsPerCountry(data);
+
+    this.statistics = [
+      { label: 'Number of countries', value: totalCountries },
+      { label: 'Number of JOs', value: totalJOs },
+    ];
+  }
+
+  private setError(message: string): void {
+    this.error = message;
+  }
+
+  private resetErrorState(): void {
+    this.error = '';
+  }
+
+  private handleError(error: HttpErrorResponse): void {
+    this.error = 'Failed to load Olympic data. Please try again later.';
+    console.error('Error loading Olympic data:', error);
+  }
+
   onCountryClick(countryName: string): void {
     this.router.navigate(['country', countryName]);
+  }
+
+  retryLoad(): void {
+    this.loadOlympicData();
   }
 }

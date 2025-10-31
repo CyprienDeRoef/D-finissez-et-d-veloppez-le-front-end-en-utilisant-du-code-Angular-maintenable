@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { delay, mergeMap } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
 import { Statistic } from '../models/Statistic';
 
@@ -147,10 +147,29 @@ export class DataService {
   ]);
 
   /**
+   * Simule une erreur aléatoire (1 fois sur 5)
+   */
+  private simulateRandomError<T>(data: T): Observable<T> {
+    const shouldError = Math.random() < 0.2; // 20% de chance d'erreur (1 sur 5)
+
+    if (shouldError) {
+      return throwError(() => new Error('Simulated network error'));
+    }
+
+    return new Observable<T>((observer) => {
+      observer.next(data);
+      observer.complete();
+    });
+  }
+
+  /**
    * Retourne un Observable des données olympiques
    */
   getOlympics(): Observable<Olympic[]> {
-    return this.olympics$.asObservable().pipe(delay(500));
+    return this.olympics$.asObservable().pipe(
+      delay(500),
+      mergeMap((data) => this.simulateRandomError(data))
+    );
   }
 
   /**
@@ -165,7 +184,10 @@ export class DataService {
         observer.next(country);
         observer.complete();
       });
-    }).pipe(delay(500));
+    }).pipe(
+      delay(500),
+      mergeMap((data) => this.simulateRandomError(data))
+    );
   }
 
   /**
