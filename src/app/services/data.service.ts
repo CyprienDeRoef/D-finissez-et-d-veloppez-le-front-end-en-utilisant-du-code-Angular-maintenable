@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { Olympic } from '../models/Olympic';
+import { Statistic } from '../models/Statistic';
 
 @Injectable({
   providedIn: 'root',
@@ -148,14 +150,14 @@ export class DataService {
    * Retourne un Observable des données olympiques
    */
   getOlympics(): Observable<Olympic[]> {
-    return this.olympics$.asObservable();
+    return this.olympics$.asObservable().pipe(delay(500));
   }
 
   /**
    * Retourne les données d'un pays spécifique
    */
   getOlympicByCountry(countryName: string): Observable<Olympic | undefined> {
-    return new Observable((observer) => {
+    return new Observable<Olympic | undefined>((observer) => {
       this.olympics$.subscribe((olympics) => {
         const country = olympics.find(
           (olympic) => olympic.country === countryName
@@ -163,7 +165,7 @@ export class DataService {
         observer.next(country);
         observer.complete();
       });
-    });
+    }).pipe(delay(500));
   }
 
   /**
@@ -231,5 +233,21 @@ export class DataService {
    */
   getTotalEntries(olympic: Olympic): number {
     return olympic.participations.length;
+  }
+
+  /**
+   * Retourne les statistiques d'un pays sous forme de tableau de Statistic
+   * Utilisé pour afficher les statistiques dans le composant Country
+   */
+  getCountryStatistics(olympic: Olympic): Statistic[] {
+    const totalEntries = this.getTotalEntries(olympic);
+    const totalMedals = this.getTotalMedals(olympic);
+    const totalAthletes = this.getTotalAthletes(olympic);
+
+    return [
+      { label: 'Number of entries', value: totalEntries },
+      { label: 'Total Number of medals', value: totalMedals },
+      { label: 'Total Number of athletes', value: totalAthletes },
+    ];
   }
 }

@@ -22,6 +22,7 @@
 .split {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
   gap: $spacing-large;
   margin: $spacing-small;
@@ -42,5 +43,13 @@
   p:last-child {
     font-weight: bold;
     color: $text-color-dark;
+  }
+}
+// Responsive design - Tablet and Mobile
+@media screen and (max-width: #{$breakpoint-desktop - 1px}) {
+
+  .stat-card {
+    width: 100%;
+    max-width: 400px;
   }
 }

@@ -9,6 +9,7 @@ import { CountryComponent } from './pages/country/country.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { PageStatsHeaderComponent } from './components/page-stats-header/page-stats-header.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PageStatsHeaderComponent } from './components/page-stats-header/page-st
     PieChartComponent,
     LineChartComponent,
     PageStatsHeaderComponent,
+    LoadingComponent,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

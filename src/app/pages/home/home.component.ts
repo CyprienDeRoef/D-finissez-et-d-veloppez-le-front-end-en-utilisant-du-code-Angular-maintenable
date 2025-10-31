@@ -16,12 +16,17 @@ export class HomeComponent implements OnInit {
   public statistics: Statistic[] = [];
   public countries: string[] = [];
   public medalsData: number[] = [];
+  public isLoading: boolean = false;
 
   constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
+    this.isLoading = true;
+
     this.dataService.getOlympics().subscribe(
       (data: Olympic[]) => {
+        this.isLoading = false;
+
         if (data && data.length > 0) {
           const totalJOs = this.dataService.getTotalJOs(data);
           this.countries = this.dataService.getCountries(data);
@@ -36,6 +41,7 @@ export class HomeComponent implements OnInit {
         }
       },
       (error: HttpErrorResponse) => {
+        this.isLoading = false;
         this.error = error.message;
       }
     );

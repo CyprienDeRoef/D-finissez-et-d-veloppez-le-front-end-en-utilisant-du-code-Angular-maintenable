@@ -1,0 +1,37 @@
+@import '../../../variables';
+
+.intro-section {
+  margin-bottom: $spacing-large;
+  text-align: center;
+
+  .intro-text {
+    color: $text-color-light;
+    font-size: 16px;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 $spacing-medium;
+  }
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-large;
+}
+
+// Responsive design
+@media screen and (max-width: $breakpoint-mobile) {
+  .intro-section {
+    margin-bottom: $spacing-medium;
+
+    .intro-text {
+      font-size: 14px;
+      padding: 0 $spacing-small;
+    }
+  }
+
+  .content-wrapper {
+    gap: $spacing-medium;
+  }
+}

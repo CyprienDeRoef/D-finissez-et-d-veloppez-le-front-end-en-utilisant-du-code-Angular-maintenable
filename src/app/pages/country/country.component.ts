@@ -13,9 +13,11 @@ import { DataService } from '../../services/data.service';
 export class CountryComponent implements OnInit {
   public titlePage: string = '';
   public statistics: Statistic[] = [];
-  public error!: string;
+  public error: string = '';
   public years: number[] = [];
   public medalsData: string[] = [];
+  public countryNotFound: boolean = false;
+  public isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,38 +30,77 @@ export class CountryComponent implements OnInit {
       const countryName = param.get('countryName');
       if (countryName) {
         this.loadCountryData(countryName);
+      } else {
+        // Si pas de nom de pays dans l'URL, rediriger vers 404
+        this.router.navigate(['/404']);
       }
     });
   }
 
   private loadCountryData(countryName: string): void {
+    this.resetErrorState();
+    this.isLoading = true;
+
     this.dataService.getOlympicByCountry(countryName).subscribe(
       (selectedCountry: Olympic | undefined) => {
-        if (selectedCountry) {
-          this.titlePage = selectedCountry.country;
+        this.isLoading = false;
 
-          const totalEntries =
-            this.dataService.getTotalEntries(selectedCountry);
-          const totalMedals = this.dataService.getTotalMedals(selectedCountry);
-          const totalAthletes =
-            this.dataService.getTotalAthletes(selectedCountry);
-
-          // Créer le tableau de statistiques
-          this.statistics = [
-            { label: 'Number of entries', value: totalEntries },
-            { label: 'Total Number of medals', value: totalMedals },
-            { label: 'Total Number of athletes', value: totalAthletes },
-          ];
-
-          this.years = this.dataService.getYears(selectedCountry);
-          this.medalsData = this.dataService
-            .getMedalsByYear(selectedCountry)
-            .map((count) => count.toString());
+        if (!this.validateCountryData(selectedCountry, countryName)) {
+          return;
         }
+
+        this.displayCountryInformation(selectedCountry!);
       },
       (error: HttpErrorResponse) => {
-        this.error = error.message;
+        this.isLoading = false;
+        this.handleError(error);
       }
     );
+  }
+
+  private resetErrorState(): void {
+    this.countryNotFound = false;
+    this.error = '';
+  }
+
+  private validateCountryData(
+    country: Olympic | undefined,
+    countryName: string
+  ): boolean {
+    if (!country) {
+      this.setError(`Country "${countryName}" not found in our database.`);
+      return false;
+    }
+
+    if (!country.participations || country.participations.length === 0) {
+      this.setError(`No participation data available for "${countryName}".`);
+      return false;
+    }
+
+    return true;
+  }
+
+  private setError(message: string): void {
+    this.countryNotFound = true;
+    this.error = message;
+  }
+
+  private displayCountryInformation(country: Olympic): void {
+    this.titlePage = country.country;
+    this.statistics = this.dataService.getCountryStatistics(country);
+    this.years = this.dataService.getYears(country);
+    this.medalsData = this.dataService
+      .getMedalsByYear(country)
+      .map((count) => count.toString());
+  }
+
+  private handleError(error: HttpErrorResponse): void {
+    this.error =
+      'An error occurred while loading country data. Please try again later.';
+    console.error('Error loading country data:', error);
+  }
+
+  goBack(): void {
+    this.router.navigate(['']);
   }
 }

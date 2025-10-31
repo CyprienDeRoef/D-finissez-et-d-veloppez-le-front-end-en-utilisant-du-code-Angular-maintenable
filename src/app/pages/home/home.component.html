@@ -1,15 +1,32 @@
-<h2>Olympic games app</h2>
-<hr/>
-<div>
-  <app-page-stats-header 
-    [title]="titlePage" 
-    [statistics]="statistics">
-  </app-page-stats-header>
+<div class="container">
+  <h2>Olympic games app</h2>
+  <hr/>
   
-  <app-pie-chart 
-    [countries]="countries" 
-    [medalsData]="medalsData" 
-    chartId="DashboardPieChart"
-    (sliceClick)="onCountryClick($event)">
-  </app-pie-chart>
+  <!-- Loading State -->
+  <app-loading *ngIf="isLoading" message="Loading Olympic data..."></app-loading>
+  
+  <!-- Content -->
+  <div *ngIf="!isLoading">
+
+    <div class="content-wrapper">
+      <app-page-stats-header 
+        [title]="titlePage" 
+        [statistics]="statistics">
+      </app-page-stats-header>
+      
+    <div class="intro-section">
+        <p class="intro-text">
+        Explore the medal distribution across participating countries in the Olympic Games. 
+        Click on any country in the chart below to view detailed statistics.
+        </p>
+    </div>
+
+      <app-pie-chart 
+        [countries]="countries" 
+        [medalsData]="medalsData" 
+        chartId="DashboardPieChart"
+        (sliceClick)="onCountryClick($event)">
+      </app-pie-chart>
+    </div>
+  </div>
 </div>

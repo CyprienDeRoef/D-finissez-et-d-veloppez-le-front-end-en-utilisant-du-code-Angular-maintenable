@@ -1,0 +1,47 @@
+@import '../../../variables';
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: $spacing-large;
+  
+  .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba($primary-color, 0.2);
+    border-top-color: $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  .loading-text {
+    margin-top: $spacing-medium;
+    color: $text-color-light;
+    font-size: 16px;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width: $breakpoint-mobile) {
+  .loading-container {
+    min-height: 300px;
+    padding: $spacing-medium;
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .loading-text {
+      font-size: 14px;
+    }
+  }
+}

@@ -1,20 +1,48 @@
-<div>
-  <app-page-stats-header 
-    [title]="titlePage" 
-    [statistics]="statistics">
-  </app-page-stats-header>
-  
-  <div class="chart-container wrapper-container">
-    <div class="container">
+<div class="container">
+  <h2>Olympic games app</h2>
+  <hr/>
+
+  <!-- Loading State -->
+  <app-loading *ngIf="isLoading" message="Loading country data..."></app-loading>
+
+  <!-- Error State - Country Not Found -->
+  <div *ngIf="countryNotFound && !isLoading" class="error-container">
+    <div class="error-icon">⚠️</div>
+    <h2 class="error-title">Country Not Found</h2>
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-button" (click)="goBack()">
+      Back to Countries List
+    </button>
+  </div>
+
+  <!-- Error State - General Error -->
+  <div *ngIf="error && !countryNotFound && !isLoading" class="error-container">
+    <div class="error-icon">❌</div>
+    <h2 class="error-title">Error Loading Data</h2>
+    <p class="error-message">{{ error }}</p>
+    <button class="retry-button" (click)="goBack()">
+      Back to Home
+    </button>
+  </div>
+
+  <!-- Success State - Display Data -->
+  <div *ngIf="!error && !countryNotFound && !isLoading">
+    <app-page-stats-header 
+      [title]="titlePage" 
+      [statistics]="statistics">
+    </app-page-stats-header>
+
+  <button class="back-button" (click)="goBack()">
+    <span class="arrow">←</span> Retour
+  </button>
+    
+    <div class="chart-container">
       <app-line-chart 
         [years]="years" 
         [medalsData]="medalsData" 
         chartId="countryChart">
       </app-line-chart>
-      <h2>Date</h2>
+      <h2>Medals by Year</h2>
     </div>
-  </div>
-  <div class="center">
-    <a routerLink="">Go back</a>
   </div>
 </div>

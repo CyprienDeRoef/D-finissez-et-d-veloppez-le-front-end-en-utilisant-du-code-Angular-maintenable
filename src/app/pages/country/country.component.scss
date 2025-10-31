@@ -1,34 +1,91 @@
 @import '../../../variables';
 
-.split {
+.back-button {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: $spacing-large;
-  margin: $spacing-small;
+  align-items: center;
+  gap: $spacing-small;
+  padding: $spacing-small $spacing-medium;
+  background-color: transparent;
+  border: 2px solid $primary-color;
+  border-radius: 8px;
+  color: $primary-color;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  
+  .arrow {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  &:hover {
+    background-color: $primary-color;
+    color: white;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
-.center {
+.error-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin: $spacing-small;
-}
-
-.wrapper-container {
-    display: flex;
-    justify-content: center;
-}
-
-.container {
-    width: 50%;
-    h2{
-        text-align: center;
-        color: $text-color-light;
+  min-height: 400px;
+  text-align: center;
+  padding: $spacing-large;
+  
+  .error-icon {
+    font-size: 64px;
+    margin-bottom: $spacing-medium;
+  }
+  
+  .error-title {
+    color: $text-color-dark;
+    font-size: 28px;
+    margin-bottom: $spacing-small;
+  }
+  
+  .error-message {
+    color: $text-color-light;
+    font-size: 16px;
+    margin-bottom: $spacing-large;
+    max-width: 500px;
+    line-height: 1.6;
+  }
+  
+  .retry-button {
+    padding: $spacing-small $spacing-large;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: darken($primary-color, 10%);
+      transform: translateY(-2px);
     }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
 }
 
-@media screen and (max-width: $breakpoint-mobile) {
-    .container {
-        width: 100%;
-    }
+.chart-container {
+  width: 100%;
+  margin-inline: auto;
+  
+  h2 {
+    text-align: center;
+    color: $text-color-light;
+  }
 }
