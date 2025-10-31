@@ -52,19 +52,13 @@ src/app/
 - **Responsabilité** : Visualisation de l'évolution des médailles par année
 - **Autonomie** : Composant standalone importable dans n'importe quel module
 
-#### `StatCardComponent`
+#### `PageStatsHeaderComponent`
 
-- **Rôle** : Affiche une carte de statistique (label + valeur)
-- **Inputs** : `label`, `value`
-- **Responsabilité** : Présentation de statistiques clés
+- **Rôle** : Composant unifié affichant le titre de page + statistiques sous forme de cartes
+- **Inputs** : `title` (string), `statistics` (Statistic[])
+- **Responsabilité** : Gestion cohérente de l'en-tête des pages avec leurs indicateurs
 - **Autonomie** : Composant standalone importable dans n'importe quel module
-
-#### `PageHeaderComponent`
-
-- **Rôle** : Affiche un en-tête de page stylisé
-- **Inputs** : `title`
-- **Responsabilité** : Titre de page cohérent dans l'application
-- **Autonomie** : Composant standalone importable dans n'importe quel module
+- **Architecture** : Remplace et unifie `StatCardComponent` + `PageHeaderComponent`
 
 ### Composants de Pages (Routing)
 

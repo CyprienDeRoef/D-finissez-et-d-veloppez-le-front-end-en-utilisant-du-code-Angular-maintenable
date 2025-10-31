@@ -1,17 +1,19 @@
+@import '../../../variables';
+
 .page-header-container {
-  margin-bottom: 20px;
+  margin-bottom: $spacing-large;
 }
 
 .center {
   display: flex;
   justify-content: center;
-  margin: 5px;
+  margin: $spacing-small;
 
   .title {
-    background: #0b868f;
-    padding: 10px;
-    border-radius: 10px;
-    color: white;
+    background: $primary-color;
+    padding: $spacing-medium;
+    border-radius: $border-radius;
+    color: $white;
     font-size: 18px;
     font-weight: bold;
   }
@@ -21,15 +23,15 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 20px;
-  margin: 5px;
+  gap: $spacing-large;
+  margin: $spacing-small;
 }
 
 .stat-card {
-  padding: 10px;
-  border: solid #0b868f 1px;
-  border-radius: 10px;
-  color: gray;
+  padding: $spacing-medium;
+  border: solid $primary-color 1px;
+  border-radius: $border-radius;
+  color: $text-color-light;
   margin: 0px;
 
   p {
@@ -39,6 +41,6 @@
 
   p:last-child {
     font-weight: bold;
-    color: black;
+    color: $text-color-dark;
   }
 }
