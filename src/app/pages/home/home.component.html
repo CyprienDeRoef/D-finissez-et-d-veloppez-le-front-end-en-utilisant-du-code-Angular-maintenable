@@ -2,19 +2,16 @@
 <hr/>
 <div>
   <div>
-    <div class="center">
-      <div>{{ titlePage }}</div>
-    </div>
+    <app-page-header [title]="titlePage"></app-page-header>
     <div class="split">
-      <div>
-        <p>Number of countries</p>
-        <p>{{ totalCountries }}</p>
-      </div>
-      <div>
-        <p>Number of JOs</p>
-        <p>{{ totalJOs }}</p>
-      </div>
+      <app-stat-card label="Number of countries" [value]="totalCountries"></app-stat-card>
+      <app-stat-card label="Number of JOs" [value]="totalJOs"></app-stat-card>
     </div>
   </div>
-  <canvas id="DashboardPieChart">{{ pieChart }}</canvas>
+  <app-pie-chart 
+    [countries]="countries" 
+    [medalsData]="medalsData" 
+    chartId="DashboardPieChart"
+    (sliceClick)="onCountryClick($event)">
+  </app-pie-chart>
 </div>
