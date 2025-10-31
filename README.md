@@ -72,3 +72,31 @@ src/app/
 - TypeScript
 - Chart.js
 - RxJS
+
+## Aperçu de l'application
+
+### Page d'accueil
+
+<table>
+  <tr>
+    <td><b>Desktop</b></td>
+    <td><b>Mobile</b></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/home-desktop.png" alt="Page d'accueil - Desktop" width="500"/></td>
+    <td><img src="./screenshots/home-mobile.png" alt="Page d'accueil - Mobile" width="250"/></td>
+  </tr>
+</table>
+
+### Page détail pays
+
+<table>
+  <tr>
+    <td><b>Desktop</b></td>
+    <td><b>Mobile</b></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/country-desktop.png" alt="Page pays - Desktop" width="500"/></td>
+    <td><img src="./screenshots/country-mobile.png" alt="Page pays - Mobile" width="250"/></td>
+  </tr>
+</table>
