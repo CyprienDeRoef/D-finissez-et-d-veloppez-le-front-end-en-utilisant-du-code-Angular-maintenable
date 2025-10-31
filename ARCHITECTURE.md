@@ -9,10 +9,10 @@ Application Angular développée avec une architecture modulaire et maintenable,
 ```
 src/app/
 ├── components/              # Composants réutilisables standalone
-│   ├── line-chart/         # Graphique en ligne (Chart.js)
+│   ├── line-chart/         # Graphique linéaire (Chart.js)
 │   ├── pie-chart/          # Graphique camembert (Chart.js)
-│   ├── page-header/        # En-tête de page
-│   └── stat-card/          # Carte de statistique
+│   ├── page-stats-header/  # En-tête de page avec statistiques
+│   └── loading/            # Composant de chargement
 │
 ├── pages/                   # Composants de pages (routing)
 │   ├── home/               # Page d'accueil (dashboard)
@@ -25,7 +25,8 @@ src/app/
 │
 ├── models/                  # Interfaces TypeScript
 │   ├── Olympic.ts          # Modèle de données olympiques
-│   └── Participation.ts    # Modèle de participation
+│   ├── Participation.ts    # Modèle de participation
+│   └── Statistic.ts        # Modèle de statistique
 │
 ├── constants/               # Constantes de l'application
 │   └── chart-colors.ts     # Palettes de couleurs pour les graphiques
@@ -58,7 +59,12 @@ src/app/
 - **Inputs** : `title` (string), `statistics` (Statistic[])
 - **Responsabilité** : Gestion cohérente de l'en-tête des pages avec leurs indicateurs
 - **Autonomie** : Composant standalone importable dans n'importe quel module
-- **Architecture** : Remplace et unifie `StatCardComponent` + `PageHeaderComponent`
+
+#### `LoadingComponent`
+
+- **Rôle** : Composant de chargement affiché pendant le chargement des données
+- **Responsabilité** : Feedback visuel utilisateur lors des opérations asynchrones
+- **Autonomie** : Composant standalone réutilisable
 
 ### Composants de Pages (Routing)
 
@@ -156,6 +162,15 @@ interface Participation {
   city: string;
   medalsCount: number;
   athleteCount: number;
+}
+```
+
+### `Statistic`
+
+```typescript
+interface Statistic {
+  label: string;
+  value: number;
 }
 ```
 
