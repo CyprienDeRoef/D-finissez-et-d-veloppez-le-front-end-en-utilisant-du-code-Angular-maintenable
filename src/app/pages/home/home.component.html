@@ -1,13 +1,11 @@
 <h2>Olympic games app</h2>
 <hr/>
 <div>
-  <div>
-    <app-page-header [title]="titlePage"></app-page-header>
-    <div class="split">
-      <app-stat-card label="Number of countries" [value]="totalCountries"></app-stat-card>
-      <app-stat-card label="Number of JOs" [value]="totalJOs"></app-stat-card>
-    </div>
-  </div>
+  <app-page-stats-header 
+    [title]="titlePage" 
+    [statistics]="statistics">
+  </app-page-stats-header>
+  
   <app-pie-chart 
     [countries]="countries" 
     [medalsData]="medalsData" 

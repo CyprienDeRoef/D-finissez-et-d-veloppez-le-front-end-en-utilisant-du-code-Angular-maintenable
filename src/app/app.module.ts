@@ -8,8 +8,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { CountryComponent } from './pages/country/country.component';
 import { PieChartComponent } from './components/pie-chart/pie-chart.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
-import { StatCardComponent } from './components/stat-card/stat-card.component';
-import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { PageStatsHeaderComponent } from './components/page-stats-header/page-stats-header.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,7 @@ import { PageHeaderComponent } from './components/page-header/page-header.compon
     AppRoutingModule,
     PieChartComponent,
     LineChartComponent,
-    StatCardComponent,
-    PageHeaderComponent,
+    PageStatsHeaderComponent,
   ],
   providers: [provideHttpClient()],
   bootstrap: [AppComponent],

@@ -1,0 +1,11 @@
+<div class="page-header-container">
+  <div class="center">
+    <div class="title">{{ title }}</div>
+  </div>
+  <div class="split">
+    <div class="stat-card" *ngFor="let stat of statistics">
+      <p>{{ stat.label }}</p>
+      <p>{{ stat.value }}</p>
+    </div>
+  </div>
+</div>

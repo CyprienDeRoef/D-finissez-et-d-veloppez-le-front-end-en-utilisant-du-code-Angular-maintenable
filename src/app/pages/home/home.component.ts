@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Olympic } from '../../models/Olympic';
+import { Statistic } from '../../models/Statistic';
 import { DataService } from '../../services/data.service';
 
 @Component({
@@ -10,40 +11,31 @@ import { DataService } from '../../services/data.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public totalCountries: number = 0;
-  public totalJOs: number = 0;
   public error!: string;
   public titlePage: string = 'Medals per Country';
+  public statistics: Statistic[] = [];
   public countries: string[] = [];
   public medalsData: number[] = [];
 
   constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
-    console.log('HomeComponent ngOnInit called');
-    console.log('titlePage:', this.titlePage);
-
     this.dataService.getOlympics().subscribe(
       (data: Olympic[]) => {
-        console.log(`Liste des données : ${JSON.stringify(data)}`);
-        console.log('Data length:', data?.length);
-
         if (data && data.length > 0) {
-          this.totalJOs = this.dataService.getTotalJOs(data);
+          const totalJOs = this.dataService.getTotalJOs(data);
           this.countries = this.dataService.getCountries(data);
-          this.totalCountries = this.countries.length;
+          const totalCountries = this.countries.length;
           this.medalsData = this.dataService.getTotalMedalsPerCountry(data);
 
-          console.log('totalJOs:', this.totalJOs);
-          console.log('countries:', this.countries);
-          console.log('totalCountries:', this.totalCountries);
-          console.log('medalsData:', this.medalsData);
-        } else {
-          console.log('No data received or empty array');
+          // Créer le tableau de statistiques
+          this.statistics = [
+            { label: 'Number of countries', value: totalCountries },
+            { label: 'Number of JOs', value: totalJOs },
+          ];
         }
       },
       (error: HttpErrorResponse) => {
-        console.log(`erreur : ${error}`);
         this.error = error.message;
       }
     );
