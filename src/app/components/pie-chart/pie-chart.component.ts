@@ -54,9 +54,6 @@ export class PieChartComponent implements OnInit, OnDestroy, AfterViewInit {
           hoverOffset: 4,
         },
       ],
-      options: {
-        aspectRatio: 2.5,
-      },
       onClick: (index, label) => {
         this.sliceClick.emit(label as string);
       },

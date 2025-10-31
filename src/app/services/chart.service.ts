@@ -16,6 +16,15 @@ export interface ChartOptions<T extends ChartType = ChartType> {
 })
 export class ChartService {
   /**
+   * Options par défaut pour tous les charts
+   */
+  private readonly defaultOptions = {
+    responsive: true,
+    maintainAspectRatio: true,
+    aspectRatio: 2.5,
+  } as const;
+
+  /**
    * Crée un chart Chart.js avec une configuration typée
    * Retourne l'instance du chart ou null si le canvas n'existe pas
    */
@@ -37,7 +46,10 @@ export class ChartService {
         labels: config.labels,
         datasets: config.datasets,
       },
-      options: config.options,
+      options: {
+        ...this.defaultOptions,
+        ...config.options,
+      } as ChartConfiguration<T>['options'],
     };
 
     // Ajouter le onClick handler si fourni

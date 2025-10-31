@@ -46,9 +46,6 @@ export class LineChartComponent implements OnDestroy, AfterViewInit {
           backgroundColor: CHART_COLORS.primary,
         },
       ],
-      options: {
-        aspectRatio: 2.5,
-      },
     });
   }
 }
