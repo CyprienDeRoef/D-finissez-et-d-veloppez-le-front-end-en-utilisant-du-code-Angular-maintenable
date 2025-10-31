@@ -1,29 +1,74 @@
-# OlympicGamesStarter
+# Olympic Games Dashboard
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.6.
+Application Angular de visualisation des données des Jeux Olympiques.
 
-Don't forget to install your node_modules before starting (`npm install`).
+## Prérequis
 
-## Development server
+- Node.js (version recommandée : LTS)
+- Angular CLI 18.0.6
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Installation
+
+```bash
+npm install
+```
+
+## Développement
+
+Lancer le serveur de développement :
+
+```bash
+npm start
+```
+
+L'application sera accessible sur `http://localhost:4200/`
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm run build
+```
 
-## Where to start
+Les fichiers de production seront générés dans le dossier `dist/`.
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+## Architecture
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+```
+src/app/
+├── components/              # Composants réutilisables standalone
+│   ├── line-chart/         # Graphique linéaire (Chart.js)
+│   ├── pie-chart/          # Graphique camembert (Chart.js)
+│   ├── page-stats-header/  # En-tête de page avec statistiques
+│   └── loading/            # Composant de chargement
+│
+├── pages/                   # Composants de pages (routing)
+│   ├── home/               # Page d'accueil avec vue d'ensemble
+│   ├── country/            # Page détail d'un pays
+│   └── not-found/          # Page 404
+│
+├── services/                # Services métier
+│   ├── data.service.ts     # Gestion des données olympiques
+│   └── chart.service.ts    # Création et gestion des graphiques
+│
+├── models/                  # Interfaces TypeScript
+│   ├── Olympic.ts          # Modèle de données olympiques
+│   ├── Participation.ts    # Modèle de participation aux JO
+│   └── Statistic.ts        # Modèle de statistique
+│
+└── constants/               # Constantes de l'application
+    └── chart-colors.ts     # Palettes de couleurs pour les graphiques
+```
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
+**Principes appliqués** :
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
+- Composants standalone réutilisables
+- Typage TypeScript strict (sans `any`)
+- Séparation présentation/logique métier
+- Architecture prête pour une connexion API
 
-You're now ready to implement the requested features.
+## Technologies
 
-Good luck!
+- Angular 18
+- TypeScript
+- Chart.js
+- RxJS
