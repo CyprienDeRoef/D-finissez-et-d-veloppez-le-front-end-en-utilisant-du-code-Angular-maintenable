@@ -7,7 +7,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { CHART_PALETTE } from '../../core/constants/chart-colors';
+import { CHART_PALETTE } from '../../constants/chart-colors';
 
 @Component({
   selector: 'app-pie-chart',

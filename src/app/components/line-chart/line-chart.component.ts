@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { CHART_COLORS } from '../../core/constants/chart-colors';
+import { CHART_COLORS } from '../../constants/chart-colors';
 
 @Component({
   selector: 'app-line-chart',
