@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Olympic } from '../../models/Olympic';
-import { OlympicService } from '../../services/olympic.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-country',
@@ -21,7 +21,7 @@ export class CountryComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private olympicService: OlympicService
+    private dataService: DataService
   ) {}
 
   ngOnInit() {
@@ -34,28 +34,18 @@ export class CountryComponent implements OnInit {
   }
 
   private loadCountryData(countryName: string): void {
-    this.olympicService.getOlympicByCountry(countryName).subscribe(
+    this.dataService.getOlympicByCountry(countryName).subscribe(
       (selectedCountry: Olympic | undefined) => {
         if (selectedCountry) {
           this.titlePage = selectedCountry.country;
-          this.totalEntries = selectedCountry.participations.length;
-          this.years = selectedCountry.participations.map(
-            (participation) => participation.year
-          );
-          this.medalsData = selectedCountry.participations.map(
-            (participation) => participation.medalsCount.toString()
-          );
-          this.totalMedals = this.medalsData.reduce(
-            (accumulator: number, item: string) => accumulator + parseInt(item),
-            0
-          );
-          const nbAthletes = selectedCountry.participations.map(
-            (participation) => participation.athleteCount.toString()
-          );
-          this.totalAthletes = nbAthletes.reduce(
-            (accumulator: number, item: string) => accumulator + parseInt(item),
-            0
-          );
+          this.totalEntries = this.dataService.getTotalEntries(selectedCountry);
+          this.totalMedals = this.dataService.getTotalMedals(selectedCountry);
+          this.totalAthletes =
+            this.dataService.getTotalAthletes(selectedCountry);
+          this.years = this.dataService.getYears(selectedCountry);
+          this.medalsData = this.dataService
+            .getMedalsByYear(selectedCountry)
+            .map((count) => count.toString());
         }
       },
       (error: HttpErrorResponse) => {

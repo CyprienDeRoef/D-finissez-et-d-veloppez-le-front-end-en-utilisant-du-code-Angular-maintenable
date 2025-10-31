@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Olympic } from '../../models/Olympic';
-import { OlympicService } from '../../services/olympic.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -17,34 +17,29 @@ export class HomeComponent implements OnInit {
   public countries: string[] = [];
   public medalsData: number[] = [];
 
-  constructor(private router: Router, private olympicService: OlympicService) {}
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
-    this.olympicService.loadInitialData().subscribe(
+    console.log('HomeComponent ngOnInit called');
+    console.log('titlePage:', this.titlePage);
+
+    this.dataService.getOlympics().subscribe(
       (data: Olympic[]) => {
         console.log(`Liste des données : ${JSON.stringify(data)}`);
+        console.log('Data length:', data?.length);
+
         if (data && data.length > 0) {
-          this.totalJOs = Array.from(
-            new Set(
-              data
-                .map((olympic: Olympic) =>
-                  olympic.participations.map(
-                    (participation) => participation.year
-                  )
-                )
-                .flat()
-            )
-          ).length;
-          this.countries = data.map((olympic: Olympic) => olympic.country);
+          this.totalJOs = this.dataService.getTotalJOs(data);
+          this.countries = this.dataService.getCountries(data);
           this.totalCountries = this.countries.length;
-          const medals = data.map((olympic: Olympic) =>
-            olympic.participations.map(
-              (participation) => participation.medalsCount
-            )
-          );
-          this.medalsData = medals.map((medalCounts) =>
-            medalCounts.reduce((acc: number, count: number) => acc + count, 0)
-          );
+          this.medalsData = this.dataService.getTotalMedalsPerCountry(data);
+
+          console.log('totalJOs:', this.totalJOs);
+          console.log('countries:', this.countries);
+          console.log('totalCountries:', this.totalCountries);
+          console.log('medalsData:', this.medalsData);
+        } else {
+          console.log('No data received or empty array');
         }
       },
       (error: HttpErrorResponse) => {
